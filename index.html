@@ -1,0 +1,1513 @@
+<!DOCTYPE html>
+
+<html lang="de">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>Rad der Schande!</title>
+<style>
+
+html, body {
+  height: 100%;
+  overflow: hidden;
+}
+
+
+#entriesTopLeft h3 {
+  color: #00cfff;
+  font-weight: bold;
+  font-size: 16px;
+  text-align: center;
+  font-family: 'Orbitron', sans-serif;
+  margin-bottom: 10px;
+}
+
+
+#newProfileName::placeholder {
+  font-style: italic;
+  font-size: 11px; /* oder z. B. 10px, 12px – wie du magst */
+}
+
+#starsBg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: -1;
+  width: 100vw;
+  height: 100vh;
+  background: black;
+  display: block;
+}
+
+
+
+
+
+#items {
+  height: 92px !important;
+  resize: vertical;
+  display: block;
+}
+
+
+
+
+
+
+
+
+
+body {
+<canvas id="starsBg"></canvas>
+
+  background: url('https://i.ibb.co/FKm0Mtv/galaxy.jpg') center center fixed;
+  background-size: cover;
+  color: #fff;
+}
+
+
+
+
+
+
+
+@keyframes glowEffect {
+  0%   { filter: drop-shadow(0 0 0px #b76cff); transform: scale(1); }
+  50%  { filter: drop-shadow(0 0 25px #b76cff); transform: scale(1.05); }
+  100% { filter: drop-shadow(0 0 0px #b76cff); transform: scale(1); }
+}
+
+.glow-on-save {
+  animation: glowEffect 0.8s ease-out;
+}
+
+
+
+#profileTopRight input,
+#profileTopRight button {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+#profileTopRight input {
+  padding: 10px;
+  font-size: 16px;
+  margin-bottom: 10px;
+  background-color: #111;
+  border: 1px solid #444;
+  border-radius: 5px;
+  color: #fff;
+}
+
+
+
+
+
+
+
+#main h1 {
+  margin-bottom: 10px; /* vorher war das evtl. größer */
+}
+
+#winner {
+  margin-top: 144px;  /* macht den Abstand enger */
+}
+
+
+
+#spinBtn {
+  position: relative;
+  width: 300px; 
+  font-family: 'Orbitron', sans-serif;
+  font-weight: bold;
+  font-size: 22px; /* kleinerer Text */
+  color: white;
+  background: #111;
+  border: none;
+  padding: 5px 15; 
+  border-radius: 20px;
+  cursor: grab;
+  text-align: center;
+  z-index: 1;
+  overflow: hidden;
+  animation: pulseBtn 2s ease-in-out infinite;
+  margin-top: -3px; /* Abstand nach oben */
+margin-bottom: -5px;
+}
+
+
+
+
+#spinBtn::before {
+  content: "";
+  position: absolute;
+  top: -4px;
+  left: -4px;
+  right: -4px;
+  bottom: -4px;
+  background: linear-gradient(120deg, #ff00ff, #00ffff, #ff00ff, #00ffff);
+  background-size: 300% 300%;
+  border-radius: 14px;
+  z-index: -1;
+  animation: borderPulse 3s linear infinite;
+  filter: blur(8px);
+}
+
+@keyframes borderPulse {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes pulseBtn {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+
+
+  #datetime {
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    font-size: 1px;
+    color: #ccc;
+    user-select: none;
+    z-index: 3000;
+margin-top: px;
+  }
+  #liveDateTime {
+    text-align: center;
+    font-size: 12px;
+    color: #fff2cc;
+    font-family: 'Orbitron', sans-serif;
+    margin-bottom: 9px;
+  }
+#main {
+min-height: 100vh;
+  max-width: 100%;
+  text-align: center;
+  margin: 0 auto;
+  padding-top: 0px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px; /* Abstand zwischen den Elementen */
+justify-content: flex-start;
+}
+
+  h1 {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 28px;
+    color: #0cf;
+    text-shadow: 0 0 8px #0cf, 0 0 3px #08f;
+    margin-bottom: 10px;
+margin-top: -8px;
+  }
+  #wheel {
+    display: block;
+    margin-top: -10px;
+margin-bottom: 0;
+margin-left: auto;
+margin-right: auto;
+    border: 2px solid #0cf;
+    border-radius: 50%;
+    background-color: #222;
+    width: 646px;
+    height: 646px;
+  }
+  textarea {
+    width: 600px;
+    height: 180px;
+    resize: none;
+    display: block;
+    margin: 0 auto 10px auto;
+    box-sizing: border-box;
+    padding: 8px;
+    font-size: 14px;
+    border-radius: 6px;
+    border: 1px solid #444;
+    background-color: #1e1e1e;
+    color: #eee;
+  }
+  button {
+    width: 200px;
+    box-sizing: border-box;
+    display: block;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    margin: 10px auto;
+    font-size: 18px;
+    font-weight: bold;
+    background-color: #2a9df4;
+    color: #fff;
+    transition: background-color 0.3s ease;
+  }
+  button:hover {
+    background-color: #1e7ed1;
+  }
+  #winner {
+    margin-bottom: 2px;
+    font-size: 20px;
+    font-weight: bold;
+    height: 36px;
+color: #FFDE21;
+  }
+
+#history {
+  position: fixed;
+  top: 10px;
+  right: 25px;
+  height: 650px;
+  width: 10px;
+  background-color: #121212;
+  border: 1px solid #444;
+  border-radius: 10px;
+  padding: 5px;
+  font-family: sans-serif;
+  font-size: 14px;
+  color: white;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+}
+
+<div id="statsBox" style="display: none; background: #111; border-top: 1px solid #444; padding: 10px; font-family: 'Orbitron', sans-serif; font-size: 12px; color: #ccc; max-height: 200px; overflow-y: auto;">
+  <!-- Hier kommt später die Statistik rein -->
+</div>
+
+
+
+    background: #222;
+    border: 1px solid #444;
+    padding: 10px;
+    font-size: 14px;
+    border-radius: 10px;
+    color: #ccc;
+    z-index: 2000;
+  overflow: hidden; /* 👈 verhindert äußeres Scrollen */
+  height: auto;
+  }
+
+#historyList li {
+  color: #0f0;
+  margin-bottom: 5px;
+  font-weight: 600;
+  text-shadow: 0 0 2px #0f08;
+  font-family: 'Orbitron', sans-serif;
+}
+
+
+
+
+
+  #history h3 {
+    margin: 0 0 10px 0;
+    font-size: 16px;
+    color: #0cf;
+  }
+#profileTopRight {
+  position: fixed;
+  top: 740px;
+  right: 20px;
+  width: 150px;
+  background: #222;
+  border: 1px solid #444;
+  padding: 10px;
+  border-radius: 10px;
+  font-size: 14px;
+  color: #ccc;
+  user-select: none;
+  z-index: 1000;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+
+
+
+  }
+ #profileTopRight {
+  position: fixed;
+  top: 500px;
+  right: 25px;
+  width: 160px;
+  background: #222;
+  border: 1px solid #444;
+ padding: 0px 6px 6px 6px;
+  border-radius: 12px;
+  font-size: 13px;
+  color: #ccc;
+  user-select: none;
+  z-index: 1000;
+  box-shadow: 0 0 12px #0cf3;
+}
+
+#profileTopRight h3 {
+  margin: 0 0 4px 0;
+  font-size: 14px;
+  line-height: 1.1; /* dichter dran */
+}
+
+#profileTopRight select,
+#profileTopRight input {
+  width: 100%;
+  margin-bottom: 6px;
+  padding: 4px;
+  background: #111;
+  color: #ccc;
+  border: 1px solid #444;
+  border-radius: 6px;
+  font-size: 11px;
+  text-align: center;
+}
+
+#profileTopRight button {
+  width: 100%;
+  padding: 4px;
+  margin-bottom: 3px;
+margin-top: 2px;
+  font-size: 10px;
+  font-weight: 600;
+  border: none;
+  border-radius: 6px;
+  background-color: #2a9df4;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+  box-shadow: 0 1px 3px #0005;
+}
+
+#profileTopRight p {
+  margin-top: 2px;
+  font-size: 10px;
+}
+
+
+#profileTopRight p {
+  text-align: center;
+  margin-top: 6px;
+  font-size: 11px;
+  color: #0cf;
+  font-weight: bold;
+  text-shadow: 0 0 5px #0cf, 0 0 10px #0cf;
+}
+
+
+
+
+
+
+
+
+
+
+  #notizenBox {
+    position: fixed;
+    bottom: 360px;
+    left: 10px;
+    width: 350px;
+    max-height: 400px;
+margin-bottom: 10px;
+  }
+  #notizenBox label {
+    font-size: 14px;
+    color: #ccc;
+    display: block;
+    margin-bottom: 0px;
+  }
+  #logoAboveNotes {
+    width: 100%;
+    text-align: center;
+    margin-bottom: 8px;
+  }
+  #logoAboveNotes img {
+    max-width: 100%;
+    height: 80px;
+    object-fit: contain;
+  }
+  #notizenBox textarea {
+    width: 100%;
+    height: 300px;
+    background: #222;
+    color: #ccc;
+    border: 1px solid #444;
+    padding: 8px;
+    font-size: 18px;
+    resize: none;
+    box-sizing: border-box;
+    border-radius: 6px;
+  }
+  @keyframes popout {
+    0% { transform: scale(1); opacity: 0.5; }
+    40% { transform: scale(1.2); opacity: 1; }
+    100% { transform: scale(1); }
+  }
+
+
+@keyframes slowSpin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+#wheel.auto-spin {
+  animation: slowSpin 20s linear infinite;
+}
+
+
+
+</style>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&amp;display=swap" rel="stylesheet"/>
+</head>
+<body>
+<canvas id="starsBg"></canvas>
+
+<div id="entriesTopLeft" style="
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  width: 320px;
+  height: 540px;
+  background-color: #121212;
+  border: 1px solid #00cfff;
+  border-radius: 14px;
+  padding: 10px 16px 10px 10px; /* ← rechts mehr padding für Scrollbar */
+  font-family: 'Orbitron', sans-serif;
+  color: #ddd;
+  box-shadow: 0 0 12px rgba(0, 204, 255, 0.2);
+">
+<h3 style="...">Aktuelle Einträge im Rad:</h3>
+<div style="max-height: 460px; overflow-y: auto;">
+<ol id="previewEntries" style="
+      font-size: 15px;
+      color: #ccc;
+      line-height: 1.6;
+      padding-left: 20px;
+      list-style: decimal;
+      margin: 0;
+    "></ol>
+</div>
+</div>
+<div id="datetime"></div>
+<div id="main">
+<div id="liveDateTime"></div>
+<h1>
+<img alt="Rentner" src="https://i.ibb.co/hRPC9cTT/swag.png" style="height: 55px; vertical-align: middle; margin-right: 10px;"/>
+  swag_'s Rad der Schande
+  <img alt="Rentner" src="https://i.ibb.co/hRPC9cTT/swag.png" style="height: 55px; vertical-align: middle; margin-left: 10px;"/>
+</h1>
+<div id="winner" style="margin-top: -25px;"></div>
+<canvas height="500" id="wheel" width="500"></canvas>
+<button id="spinBtn">Drehen</button>
+<textarea id="items" placeholder="Eintrag pro Zeile (max 100)"></textarea>
+<!-- Sichtbarer, sauberer Button -->
+
+<p style="
+  position: relative;
+  top: -10px;            /* Nach oben verschieben */
+  font-size: 10px;      /* Kleiner machen */
+  font-family: 'Orbitron', sans-serif; /* Andere Schrift */
+  color: #0cf;          /* Optional: Farbe */
+">
+  .
+</p>
+
+</button>
+<div id="history" style="
+  position: fixed;
+  top: 10px;
+  right: 20px;
+  height: 705px;
+  width: 220px;
+  background: #121212;
+  border: 2px solid #0cf;
+  border-radius: 12px;
+  padding: 6px;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 12px;
+  color: #ddd;
+  box-shadow: 0 0 10px #0cf3;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+">
+<h3 style="
+  color: #0cf;
+  font-size: 18px;
+  text-align: center;
+  text-shadow: 0 0 5px #0cf, 0 0 10px #0cf;
+  margin: 5px 0 10px;
+">Verlauf</h3>
+<!-- ✅ Scrollbarer Verlaufsteil -->
+<div id="historyScroll" style="
+  flex: 1;
+  overflow-y: auto;
+  padding: 10px;
+">
+<ul id="historyList" style="
+  list-style: none;
+  margin: 0;
+  padding: 0;
+">
+<li style="
+    display: flex;
+    justify-content: space-between;
+    color: #0f0;
+    font-weight: 500;
+    padding: 2px 4px;
+    font-family: 'Orbitron', sans-serif;
+    border-bottom: 1px solid #222;
+  ">
+<span>23.6.2025, 17:33:09</span>
+<span style="color: lime; font-weight: 700;">5</span>
+</li>
+</ul>
+</div>
+<!-- ✅ Fester Buttonbereich -->
+<div style="
+  border-top: 1px solid #444;
+  background: #222;
+   padding: 6px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 4px;
+
+">
+<button onclick="clearHistory()" style="
+    background-color: #6a92b1;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 4px 8px;
+    font-size: 10px;
+    font-weight: 600;
+    cursor: pointer;
+    min-width: 60px;
+  ">Verlauf löschen</button>
+<button onclick="exportHistory()" style="
+    background-color: #4c94ca;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 4px 8px;
+    font-size: 10px;
+    font-weight: 600;
+    cursor: pointer;
+    min-width: 60px;
+  ">Verlauf speichern</button>
+<button onclick="showStatistics()" style="
+    background-color: #66bdff;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 4px 8px;
+    font-size: 10px;
+    font-weight: 600;
+    cursor: pointer;
+    min-width: 60px;
+  ">Statistik</button>
+<button onclick="resetStatistics()" style="
+  background-color: #216ea9;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 4px 8px;
+  font-size: 10px;
+  font-weight: 600;
+  cursor: pointer;
+  min-width: 60px;
+">Statistik löschen</button>
+</div>
+<!-- 📊 Statistik-Ausgabe -->
+<div id="statsBox" style="
+  display: none;
+  background: #111;
+  border-top: 1px solid #444;
+  padding: 10px;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 12px;
+  color: #ccc;
+  max-height: 200px;
+  overflow-y: auto;
+  margin-top: 6px;
+">
+<!-- Hier erscheint später die Statistik -->
+</div>
+<div id="statsBox" style="
+  display: none;
+  background: #111;
+  border-top: 1px solid #444;
+  padding: 10px;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 12px;
+  color: #ccc;
+  max-height: 200px;
+  overflow-y: auto;
+">
+<!-- Hier kommt später die Statistik rein -->
+</div>
+<div id="statsBox" style="
+  display: none;
+  background: #111;
+  border-top: 1px solid #444;
+  padding: 10px;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 12px;
+  color: #ccc;
+  max-height: 200px;
+  overflow-y: auto;
+">
+<!-- Hier kommt die Statistik rein -->
+</div>
+</div>
+<div id="profileTopRight">
+<img src="" style="display: block; margin: auto; height: 1px;"/>
+<h3 style="text-align: center; color: #0cf; font-family: 'Orbitron', sans-serif;">Profile</h3>
+<select id="profileSelect" onchange="loadProfile()">
+<option disabled="" selected="">Profil wählen</option>
+</select>
+<input id="newProfileName" placeholder="Name eintragen" type="text"/>
+<button onclick="saveProfile()">Speichern</button>
+<button onclick="renameProfile()">Umbenennen</button>
+<button onclick="deleteProfile()">Löschen</button>
+<div id="profileStatus"></div>
+<p style="text-align: center; margin-top: 12px; font-size: 13px; color: #0cf; font-weight: bold; text-shadow: 0 0 4px #0cf; font-family: 'Orbitron', sans-serif;">
+  twitch.tv/swag_
+</p>
+
+<div id="notizenBox" style="position: fixed; top: 610px; left: 10px; z-index: 1000; max-width: 400px;">
+<div id="notizenBox" style="position: fixed; top: 610px; left: 10px; z-index: 1000; max-width: 400px;">
+<!-- Pepe + Notizen linksbündig -->
+<div id="logoAboveNotes" style="
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 12px;
+  margin-bottom: 8px;
+  margin-left: 25px;
+">
+<img src="https://i.ibb.co/0VJTKyG6/swag1.png" style="height: 65px; margin-top: 4px;"/>
+<h1 style="
+    font-size: 30px;
+    margin: 0;
+    color: #0cf;
+    font-family: Orbitron, sans-serif;
+    text-shadow: 0 0 10px #0cf;
+  ">Notizen</h1>
+<img src="https://i.ibb.co/0VJTKyG6/swag1.png" style="height: 65px; margin-top: 4px;"/>
+</div>
+<!-- ...restlicher Inhalt deiner Box wie textarea, buttons etc. -->
+<!-- Header: Pepe + Notizen -->
+<!-- Textfeld -->
+<textarea id="notizen" style="width: 100%; height: 200px; background-color: #1e1e1e; color: white; border: 1px solid #444; border-radius: 6px; padding: 8px;"></textarea>
+<!-- Button -->
+<div style="text-align: center; margin-top: 10px;">
+<button onclick="saveNotes()" style="width: 100%; background-color: #111; color: white; border: 1px solid #444; border-radius: 4px; padding: 6px 12px; cursor: pointer;">Notizen speichern</button>
+<div id="notizStatus" style="margin-top: -75px; color: #0f0; font-size: 14px;"></div>
+</div>
+</div>
+<script>
+  // Live Datum & Uhrzeit oben mittig
+  function updateLiveDateTime() {
+    const now = new Date();
+    const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
+    const dateStr = now.toLocaleDateString('de-DE', options);
+    const timeStr = now.toLocaleTimeString('de-DE');
+    document.getElementById('liveDateTime').textContent = `${dateStr} — ${timeStr}`;
+  }
+  setInterval(updateLiveDateTime, 1000);
+  updateLiveDateTime();
+
+  const canvas = document.getElementById('wheel');
+  const ctx = canvas.getContext('2d');
+  let items = [' ', ' ', '  ', ' '];
+  let angle = 0;
+  let spinning = false;
+let idleSpinning = true;
+let idleAngle = 0;
+
+  function drawWheel() {
+    const centerX = canvas.width / 2;
+    const centerY = canvas.height / 2;
+    const radius = canvas.width / 2;
+    const arc = 2 * Math.PI / items.length;
+
+const colors = ['#1e90ff', '#2f3542', '#70a1ff', '#57606f', '#54a0ff', '#a4b0be', '#3742fa', '#dfe4ea', '#7f8fa6', '#3d3d3d'];
+
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    for (let i = 0; i < items.length; i++) {
+      const startAngle = angle + i * arc;
+      const endAngle = startAngle + arc;
+
+      ctx.beginPath();
+      ctx.moveTo(centerX, centerY);
+      ctx.arc(centerX, centerY, radius, startAngle, endAngle);
+      ctx.fillStyle = colors[i % colors.length];
+      ctx.fill();
+
+      ctx.save();
+      ctx.translate(centerX, centerY);
+      ctx.rotate(startAngle + arc / 2);
+      ctx.textAlign = 'right';
+      ctx.fillStyle = '#111';
+      ctx.font = '16px Verdana';
+      ctx.fillText(items[i], radius - 10, 10);
+      ctx.restore();
+    }
+
+function animateIdleSpin() {
+  if (!idleSpinning) return;
+  idleAngle += 0.002; // je kleiner, desto langsamer
+  angle = idleAngle % (2 * Math.PI);
+  drawWheel();
+  requestAnimationFrame(animateIdleSpin);
+}
+
+
+
+
+
+
+function spinWheel() {
+  if (spinning || items.length < 2) return;
+idleSpinning = false;
+
+  // 👇 STOPP langsame Drehung
+  document.getElementById("wheel").classList.remove("auto-spin");
+
+  spinning = true;
+  // ... Rest vom Spin bleibt wie gehabt
+}
+
+
+
+    const pointerY = centerY - radius + 5;
+    ctx.beginPath();
+    ctx.moveTo(centerX, pointerY);
+    ctx.lineTo(centerX - 10, pointerY - 20);
+    ctx.lineTo(centerX + 10, pointerY - 20);
+    ctx.closePath();
+    ctx.fillStyle = '#f0f';
+    ctx.fill();
+  }
+
+function applyItems() {
+  const textarea = document.getElementById('items');
+  const raw = textarea.value.trim();
+  if (!raw) return;
+  const list = raw.split('\n').map(t => t.trim()).filter(t => t);
+  if (list.length > 0 && list.length <= 100) {
+    items = list;
+    drawWheel();
+    document.getElementById('winner').innerText = '';
+    updatePreviewEntries();
+    localStorage.setItem("swag_entries", textarea.value); // ✅ korrektes Element
+  }
+}
+
+
+
+  function spinWheel() {
+    if (spinning || items.length < 2) return;
+    spinning = true;
+    const spinTime = 5100;
+    const target = Math.random() * Math.PI * 10 + Math.PI * 5;
+    const start = performance.now();
+    const initialAngle = angle;
+    function animate(time) {
+      const t = time - start;
+      if (t >= spinTime) {
+        angle = (initialAngle + target) % (2 * Math.PI);
+        const arc = 2 * Math.PI / items.length;
+        const degrees = (angle * 180 / Math.PI + 90) % 360;
+        const index = Math.floor((360 - degrees) / (360 / items.length));
+        const winner = items[index >= 0 ? index : 0];
+        const winnerDiv = document.getElementById('winner');
+        winnerDiv.innerText = `Gewonnen: ${winner}`;
+	winnerDiv.style.color = 'yellow';
+        winnerDiv.style.animation = 'none';
+        winnerDiv.offsetHeight;
+        winnerDiv.style.animation = 'popout 2.5s ease 0s 3';
+dezentesKonfetti();
+       const now = new Date().toLocaleString('de-DE');
+addToHistory(now, winner);
+
+        spinning = false;
+        drawWheel();
+        return;
+      }
+      const eased = easeOut(t / spinTime);
+      angle = (initialAngle + eased * target) % (2 * Math.PI);
+      drawWheel();
+      requestAnimationFrame(animate);
+    }
+    requestAnimationFrame(animate);
+  }
+
+  function easeOut(t) {
+    return 1 - Math.pow(1 - t, 3);
+  }
+
+function addToHistory(time, winner) {
+  const li = document.createElement('li');
+  li.style.color = 'white';
+  li.style.fontFamily = "'Orbitron', sans-serif";
+  li.style.fontSize = '13px';
+  li.style.padding = '6px 6px';
+  li.style.borderBottom = '1px solid #222';
+
+  const timestamp = document.createElement('div');
+  timestamp.textContent = time;
+  timestamp.style.color = 'white';
+  timestamp.style.marginBottom = '2px';
+
+  const value = document.createElement('div');
+  value.textContent = winner;
+  value.style.color = 'lime';
+  value.style.fontWeight = 'bold';
+
+  li.appendChild(timestamp);
+  li.appendChild(value);
+
+const list = document.getElementById('historyList');
+list.insertBefore(li, list.firstChild);
+
+  // 🔥 Neu: auch im LocalStorage speichern!
+  const data = JSON.parse(localStorage.getItem("swag_history") || "[]");
+  data.push({ time, winner });
+  localStorage.setItem("swag_history", JSON.stringify(data));
+}
+
+
+
+function loadHistory() {
+  const verlauf = localStorage.getItem("swag_history");
+  const historyList = document.getElementById("historyList");
+
+  if (!verlauf || !historyList) return;
+
+  historyList.innerHTML = "";
+
+  try {
+    const verlaufArray = JSON.parse(verlauf).reverse(); // umgekehrt: neu oben
+
+    for (const eintrag of verlaufArray) {
+      const p = document.createElement("p");
+      p.innerHTML = `<span style="color:#aaa">${eintrag.time}</span>: <span style="color:lime">${eintrag.winner}</span>`;
+      historyList.appendChild(p);
+    }
+  } catch (err) {
+    console.error("Verlauf konnte nicht geladen werden:", err);
+  }
+}
+
+
+  function deleteProfile() {
+    const select = document.getElementById("profileSelect");
+    const key = select.value;
+    if (!key || !key.startsWith("swag_profile_")) return;
+    localStorage.removeItem(key);
+    refreshProfiles();
+    document.getElementById('notizen').value = localStorage.getItem('swag_notes') || '';
+  }
+
+  function renameProfile() {
+    const select = document.getElementById("profileSelect");
+    const key = select.value;
+    const newName = prompt("Wie möchte der Rentner heißen?");
+    if (!newName || !key.startsWith("swag_profile_")) return;
+    const content = localStorage.getItem(key);
+    localStorage.setItem("swag_profile_" + newName, content);
+    localStorage.removeItem(key);
+    refreshProfiles();
+    document.getElementById('notizen').value = localStorage.getItem('swag_notes') || '';
+  }
+
+  function refreshProfiles() {
+    const select = document.getElementById("profileSelect");
+    select.innerHTML = '<option disabled selected>Profil wählen</option>';
+    for (let i = 0; i < localStorage.length; i++) {
+      const key = localStorage.key(i);
+      if (key.startsWith("swag_profile_")) {
+        const opt = document.createElement("option");
+        opt.value = key;
+        opt.textContent = key.replace("swag_profile_", "");
+        select.appendChild(opt);
+      }
+    }
+  }
+
+ window.addEventListener("load", () => {
+  const saved = localStorage.getItem('swag_entries');
+  if (saved) {
+    document.getElementById('items').value = saved;
+    applyItems(); // direkt übernehmen
+  const notes = localStorage.getItem('swag_notes');
+  if (notes) {
+    document.getElementById('notizen').value = notes;
+  }
+
+  }
+
+  loadHistory();
+  refreshProfiles();
+
+  // ⬇️ HIER REIN – erst nach dem Laden!
+  document.getElementById('notizen').value = localStorage.getItem('swag_notes') || '';
+
+  drawWheel();
+  // 🔁 Auto-Save beim Tippen ins Notizfeld
+  const notizen = document.getElementById("notizen");
+  notizen.addEventListener("input", () => {
+    localStorage.setItem("swag_notes", notizen.value);
+  });
+
+});
+
+
+
+  document.getElementById('spinBtn').addEventListener('click', spinWheel);
+
+function saveNotes() {
+  const notes = document.getElementById('notizen').value;
+
+  // 🔁 Speichern im localStorage
+  localStorage.setItem('swag_notes', notes);
+
+  // 💾 Download als Datei
+  const blob = new Blob([notes], { type: "text/plain;charset=utf-8" });
+  const link = document.createElement("a");
+  link.href = URL.createObjectURL(blob);
+  link.download = "notizen.txt";
+  link.click();
+}
+
+
+function clearHistory() {
+  localStorage.removeItem("swag_verlauf");
+  document.getElementById("historyList").innerHTML = "";
+  updateStatistics(); // Statistik bleibt erhalten
+}
+
+
+function exportHistory() {
+  const data = JSON.parse(localStorage.getItem("swag_history") || "[]");
+  if (data.length === 0) {
+    alert("Welchen Verlauf möchtest du speichern, Rentner?");
+    return;
+  }
+
+  const text = data.map(entry => `${entry.time}: ${entry.winner}`).join('\n');
+  const blob = new Blob([text], { type: "text/plain" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "verlauf.txt";
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+
+function applyItems() {
+  const textarea = document.getElementById('items');
+  const raw = textarea.value.trim();
+  if (!raw) return;
+  const list = raw.split('\n').map(t => t.trim()).filter(t => t);
+  if (list.length > 0 && list.length <= 100) {
+    items = list;
+    drawWheel();
+    document.getElementById('winner').innerText = '';
+    updatePreviewEntries();
+    localStorage.setItem("swag_entries", textarea.value); // ✅ korrektes Element
+  }
+}
+
+
+
+function saveProfile() {
+  const nameInput = document.getElementById("newProfileName");
+  const name = nameInput.value.trim();
+  if (!name) {
+    alert("Bitte gib einen Profilnamen ein.");
+    return;
+  }
+
+  const entries = document.getElementById("items").value;
+  const notes = document.getElementById("notizen") ? document.getElementById("notizen").value : "";
+
+  const profile = {
+    entries,
+    notes
+  };
+
+  localStorage.setItem("swag_profile_" + name, JSON.stringify(profile));
+  updateProfileList();
+  nameInput.value = "";
+const status = document.getElementById("profileStatus");
+status.innerText = "Profil gespeichert!";
+status.style.fontSize = "10px"; // z. B. kleiner machen
+}
+
+function updateProfileList() {
+  const select = document.getElementById("profileSelect");
+  select.innerHTML = '<option disabled selected>Profil wählen</option>';
+
+  for (let key in localStorage) {
+    if (key.startsWith("swag_profile_")) {
+      const option = document.createElement("option");
+      option.value = key;
+      option.text = key.replace("swag_profile_", "");
+      select.appendChild(option);
+    }
+  }
+}
+
+function loadProfile() {
+  const select = document.getElementById("profileSelect");
+  const key = select.value;
+  const profile = JSON.parse(localStorage.getItem(key));
+  if (!profile) return;
+
+  if (profile.entries !== undefined) {
+    document.getElementById("items").value = profile.entries;
+    localStorage.setItem("swag_entries", profile.entries);
+    if (typeof updateWheel === "function") updateWheel();
+  }
+
+  if (profile.notes !== undefined && document.getElementById("notizen")) {
+    document.getElementById("notizen").value = profile.notes;
+    localStorage.setItem("swag_notes", profile.notes);
+  }
+
+  const status = document.getElementById("profileStatus");
+  status.innerText = "";
+  status.style.fontSize = "12px";
+}
+
+</script>
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js">
+function applyItems() {
+  const textarea = document.getElementById('items');
+  const raw = textarea.value.trim();
+  if (!raw) return;
+  const list = raw.split('\n').map(t => t.trim()).filter(t => t);
+  if (list.length > 0 && list.length <= 100) {
+    items = list;
+    drawWheel();
+    document.getElementById('winner').innerText = '';
+    updatePreviewEntries();
+    localStorage.setItem("swag_entries", textarea.value); // ✅ korrektes Element
+  }
+}
+
+
+</script>
+<script>
+
+
+function dezentesKonfetti() {
+  confetti({
+    particleCount: 800,
+    spread: 720,
+    origin: { y: 0.1 },
+    scalar: 2.5,
+    startVelocity: 90,
+    ticks: 400
+  });
+}
+
+
+function applyItems() {
+  const textarea = document.getElementById('items');
+  const raw = textarea.value.trim();
+  if (!raw) return;
+  const list = raw.split('\n').map(t => t.trim()).filter(t => t);
+  if (list.length > 0 && list.length <= 100) {
+    items = list;
+    drawWheel();
+    document.getElementById('winner').innerText = '';
+    updatePreviewEntries();
+    localStorage.setItem("swag_entries", textarea.value); // ✅ korrektes Element
+  }
+}
+
+
+
+
+function updatePreviewEntries() {
+  const preview = document.getElementById("previewEntries");
+  if (!preview) return;
+preview.innerHTML = items.map((x, i) => `<span style="font-size: 11px; color: #888;">${i + 1}.</span> ${x}`).join("<br>");
+}
+</script>
+<script>
+function showStatistics() {
+  const statsBox = document.getElementById("statsBox");
+  if (!statsBox) return;
+
+  // 👇 Toggle Sichtbarkeit
+  if (statsBox.style.display === "block") {
+    statsBox.style.display = "none";
+    return;
+  }
+
+  const history = JSON.parse(localStorage.getItem("swag_history") || "[]");
+
+  if (history.length === 0) {
+    statsBox.innerHTML = "<em>Keine Statistik vorhanden.</em>";
+    statsBox.style.display = "block";
+    return;
+  }
+
+for (const eintrag of verlaufArray.slice().reverse()) {
+  // ...
+}
+
+
+  const total = history.length;
+  const sorted = Object.entries(stats).sort((a, b) => b[1] - a[1]);
+
+  statsBox.innerHTML = sorted.map(([key, val]) => {
+    const percent = Math.round((val / total) * 100);
+    return `
+      <div style="margin-bottom: 6px;">
+        <div style="margin-bottom: 2px;">
+          ${key} <span style="color:#0cf;">(${val}x, ${percent}%)</span>
+        </div>
+        <div style="background: #333; border-radius: 4px; overflow: hidden;">
+          <div style="height: 8px; width: ${percent}%; background: #2a9df4;"></div>
+        </div>
+      </div>
+    `;
+  }).join("");
+
+  statsBox.style.display = "block";
+}
+
+
+}
+
+setInterval(() => {
+  const stats = document.getElementById("statsOverlay");
+  if (stats.style.display === "block") {
+    showStatistics();
+  }
+}, 2000); // alle 3 Sekunden
+
+
+function showStatistics() {
+  const history = JSON.parse(localStorage.getItem("swag_history") || "[]");
+
+  if (history.length === 0) {
+    alert("Noch keine Einträge vorhanden.");
+    return;
+  }
+
+  const stats = {};
+
+  for (const entry of history) {
+    stats[entry.winner] = (stats[entry.winner] || 0) + 1;
+  }
+
+  const sorted = Object.entries(stats)
+    .sort((a, b) => b[1] - a[1])
+    .map(([key, val]) => `${key}: ${val}x`)
+    .join("\n");
+
+  alert("📊 Statistik:\n\n" + sorted);
+}
+
+
+
+</script>
+<p id="hackerTag" style="
+  position: fixed;
+  bottom: 1px;
+  left: 10px;
+  font-size: 9px;
+  font-family: monospace;
+  color: #00ff00;
+  white-space: nowrap;
+  z-index: 9999;
+  pointer-events: none;
+  user-select: none;
+">
+<span id="typedText"></span><span class="cursor">|</span>
+</p>
+<style>
+.cursor {
+  display: inline-block;
+  color: #00ff00;
+  animation: blink 1s infinite;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+</style>
+<script>
+  const text = "coded with love by 9MiSTA9 <3";
+  const target = document.getElementById("typedText");
+  const cursor = document.querySelector(".cursor");
+  let i = 0;
+  let deleting = false;
+
+  function loopType() {
+    if (!deleting) {
+      cursor.style.visibility = "visible";
+      if (i < text.length) {
+        target.textContent += text.charAt(i);
+        i++;
+        setTimeout(loopType, 150);
+      } else {
+        deleting = true;
+        setTimeout(loopType, 6000);
+      }
+    } else {
+      if (i > 0) {
+        target.textContent = text.substring(0, i - 1);
+        i--;
+        setTimeout(loopType, 80);
+      } else {
+        cursor.style.visibility = "hidden"; // Cursor ausblenden
+        deleting = false;
+        setTimeout(loopType, 5000); // Pause bevor erneut tippen
+      }
+    }
+  }
+
+  document.addEventListener("DOMContentLoaded", loopType);
+</script>
+<style>
+@keyframes rainbow {
+  0% { background-position: 0 0; }
+  100% { background-position: 200% 0; }
+}
+</style>
+<div id="statsOverlay" style="
+  display: none !important;
+  position: absolute;
+  bottom: 312px;
+  right: 5px;
+  width: 260px;
+  max-height: 250px;
+  max-width: 120px;
+  overflow: hidden;
+  background-color: #111;
+  color: #ddd;
+  border: 1px solid #444;
+  border-radius: 12px;
+  padding: 16px;
+  z-index: 9999;
+  box-shadow: 0 0 10px #000;
+  font-family: sans-serif;
+  font-size: 14px;
+">
+<h3 style="margin-top: 0; color: #0cf; font-size: 16px;">Gewinn-Statistik</h3>
+<div id="statsContent" style="margin-bottom: 10px; max-height: 150px; overflow-y: auto;"></div>
+<button onclick="document.getElementById('statsOverlay').style.display='none'" style="
+    background-color: #2a9df4;
+    color: white;
+    border: none;
+    padding: 4px 8px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 12px;
+    width: 100%;
+  ">Schließen</button>
+</div>
+<script>
+function showStatistics() {
+  const statsBox = document.getElementById("statsBox");
+  if (!statsBox) return;
+
+  // Toggle: Wenn sichtbar, dann ausblenden
+  if (statsBox.style.display === "block") {
+    statsBox.style.display = "none";
+    return;
+  }
+
+  const history = JSON.parse(localStorage.getItem("swag_history") || "[]");
+
+  if (history.length === 0) {
+    statsBox.innerHTML = "<em>Keine Statistik vorhanden.</em>";
+    statsBox.style.display = "block";
+    return;
+  }
+
+  const stats = {};
+  for (const entry of history) {
+    const name = entry.winner || entry;
+    stats[name] = (stats[name] || 0) + 1;
+  }
+
+  const total = history.length;
+  const sorted = Object.entries(stats).sort((a, b) => b[1] - a[1]);
+
+  statsBox.innerHTML = sorted.map(([key, val]) => {
+    const percent = Math.round((val / total) * 100);
+    return `
+      <div style="margin-bottom: 6px;">
+        <div style="margin-bottom: 2px;">
+          ${key} <span style="color:#0cf;">(${val}x, ${percent}%)</span>
+        </div>
+        <div style="background: #333; border-radius: 4px; overflow: hidden;">
+          <div style="height: 8px; width: ${percent}%; background: #2a9df4;"></div>
+        </div>
+      </div>
+    `;
+  }).join("");
+
+  statsBox.style.display = "block";
+}
+
+</script>
+<script>
+function resetStatistics() {
+  localStorage.removeItem("swag_history");
+  const statsBox = document.getElementById("statsBox");
+  if (statsBox) {
+    statsBox.innerHTML = "<em>Statistik wurde gelöscht.</em>";
+    statsBox.style.display = "block";
+  }
+}
+</script>
+<!-- ✅ Canvas-Confetti korrekt eingebunden -->
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+<!-- ✅ Eigene Confetti-Funktion -->
+<script>
+function fireConfetti() {
+  confetti({
+    particleCount: 300,
+    spread: 300,
+    origin: { y: 1.2 },
+    scalar: 1.1,
+    zIndex: 1000
+  });
+}
+</script>
+<!-- Beispielnutzung: Nach Gewinn -->
+<script>
+function handleWin(winnerText) {
+  document.getElementById("gewonnenText").textContent = winnerText;
+  fireConfetti(); // 🎉 Auslösen wenn jemand gewinnt
+  // ... restlicher Code z. B. Verlauf speichern etc.
+}
+</script>
+</div></div></div><script>
+document.addEventListener("DOMContentLoaded", () => {
+  const textarea = document.getElementById("items");
+  if (!textarea) return;
+
+  function tryApplyItems() {
+    if (typeof applyItems === "function") {
+      applyItems(); // 🔁 ruft applyItems() auf, um Rad zu aktualisieren
+    }
+  }
+
+  const saved = localStorage.getItem("swag_entries");
+  if (saved) {
+    textarea.value = saved;
+    tryApplyItems();
+  }
+
+  textarea.addEventListener("input", () => {
+    localStorage.setItem("swag_entries", textarea.value);
+    tryApplyItems();
+  });
+});
+</script>
+
+<canvas id="starsBg"></canvas>
+
+<script>
+  const canvas = document.getElementById('starsBg');
+  const ctx = canvas.getContext('2d');
+
+  function resizeCanvas() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  }
+  resizeCanvas();
+  window.addEventListener('resize', resizeCanvas);
+
+  const stars = Array.from({ length: 200 }, () => ({
+    x: Math.random() * window.innerWidth,
+    y: Math.random() * window.innerHeight,
+    r: Math.random() * 1.5 + 0.5,
+    alpha: Math.random() * 0.5 + 0.5,
+    delta: (Math.random() * 0.02 + 0.005) * (Math.random() < 0.5 ? 1 : -1)
+  }));
+
+  function drawStars() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    for (let s of stars) {
+      s.alpha += s.delta;
+      if (s.alpha <= 0.3 || s.alpha >= 1) s.delta *= -1;
+
+      ctx.beginPath();
+      ctx.arc(s.x, s.y, s.r, 0, 2 * Math.PI);
+      ctx.fillStyle = `rgba(255, 255, 255, ${s.alpha})`;
+      ctx.fill();
+    }
+    requestAnimationFrame(drawStars);
+  }
+
+  drawStars();
+</script>
+
+
+
+
+
+</body>
+</html>
+<script>
+function updateStatistics() {
+  const statsBox = document.getElementById("statsBox");
+  if (!statsBox) return;
+
+  const statsArray = JSON.parse(localStorage.getItem("swag_stats") || "[]");
+
+  if (statsArray.length === 0) {
+    statsBox.innerHTML = "<em>Keine Statistik vorhanden.</em>";
+    return;
+  }
+
+  const stats = {};
+  for (const name of statsArray) {
+    stats[name] = (stats[name] || 0) + 1;
+  }
+
+  const total = statsArray.length;
+  const sorted = Object.entries(stats).sort((a, b) => b[1] - a[1]);
+
+  statsBox.innerHTML = sorted.map(([key, val]) => {
+    const percent = Math.round((val / total) * 100);
+    return `
+      <div style="margin-bottom: 6px;">
+        <div style="margin-bottom: 2px;">
+          ${key} <span style="color:#0cf;">(${val}x, ${percent}%)</span>
+        </div>
+        <div style="background: #333; border-radius: 4px; overflow: hidden;">
+          <div style="height: 8px; width: ${percent}%; background: #2a9df4;"></div>
+        </div>
+      </div>
+    `;
+  }).join("");
+}
+</script>
